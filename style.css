@@ -19,6 +19,8 @@
         var(--gradient-color-right),
         var(--gradient-color-left)
     );
+
+    transition: var(--gradient) 1s ease-in-out;
 }
 
 body {
@@ -30,6 +32,7 @@ body {
     justify-content: center;
     font-family: 'Convergence', sans-serif;
     margin: 0;
+    transition: background-color 1s ease-in-out;
 }
 
 .music-container {

@@ -34,6 +34,7 @@ const loadSong = (song) => {
     title.textContent = song;
     audio.src = `music/${song}.mp3`;
     cover.src = `images/${song}.jpg`;
+    setRandomGradient();
 };
 
 // ------------ Functions to handle player events ------------
@@ -92,6 +93,7 @@ const setProgress = (e) => {
 const setRandomGradient = () => {
     setGradientLeftHex(getRandomHexColor());
     setGradientRightHex(getRandomHexColor());
+    chooseElementColors();
 };
 
 const getRandomHexColor = () => {
@@ -106,7 +108,7 @@ const getRandomHexColor = () => {
 };
 
 // Finds an appropriate heading color (black or white) to contrast random background
-const chooseHeadingColor = () => {
+const chooseElementColors = () => {
     // from: https://stackoverflow.com/questions/52641718/get-average-of-two-hex-colors-returning-same-result
     color1 = getGradientLeftHex();
     color2 = getGradientRightHex();
@@ -139,8 +141,10 @@ const chooseHeadingColor = () => {
             hex(avg(b(hex1), b(hex2)));
     if (res < '#888888') {
         mainHeading.style.color = 'white';
+        progressContainer.style.background = 'white';
     } else {
         mainHeading.style.color = 'black';
+        progressContainer.style.background = 'rgba(0,0,0,0.2)';
     }
 };
 
@@ -173,4 +177,3 @@ progressContainer.addEventListener('click', setProgress);
 
 loadSong(songs[songIndex]);
 setRandomGradient();
-chooseHeadingColor();
