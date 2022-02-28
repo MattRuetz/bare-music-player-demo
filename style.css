@@ -5,23 +5,24 @@
 }
 
 :root {
-    --gradient-color-left: #ff8235;
-    --gradient-color-right: #30e8bf;
+    --gradient-color-right: #ff8235;
+    --gradient-color-left: #30e8bf;
+
+    --gradient: var(--gradient-color-left);
+    --gradient: -webkit-linear-gradient(
+        to left,
+        var(--gradient-color-right),
+        var(--gradient-color-left)
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    --gradient: linear-gradient(
+        to left,
+        var(--gradient-color-right),
+        var(--gradient-color-left)
+    );
 }
 
 body {
-    background: var(--gradient-color-left); /* fallback for old browsers */
-    background: -webkit-linear-gradient(
-        to left,
-        var(--gradient-color-left),
-        var(--gradient-color-right)
-    ); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(
-        to left,
-        var(--gradient-color-left),
-        var(--gradient-color-right)
-    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+    background: var(--gradient);
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -47,7 +48,21 @@ body {
     width: 110px;
 }
 
+.img-container::after {
+    content: '';
+    background-color: #fff;
+    border: 1.5px solid black;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    transform: translate(-50%, 50%);
+}
+
 .img-container img {
+    border: 1.5px solid black;
     border-radius: 50%;
     object-fit: cover;
     height: 110px;
@@ -97,4 +112,44 @@ body {
 
 .action-btn:focus {
     outline: 0;
+}
+
+.music-info {
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 15px 15px 0 0;
+    position: absolute;
+    top: 0;
+    left: 20px;
+    width: calc(100% - 40px);
+    padding: 10px 10px 10px 150px;
+    opacity: 0;
+    transform: translateY(0%);
+    transition: transform 0.3s ease-in, opacity 0.3s ease-in;
+    z-index: 0;
+}
+
+.music-container.play .music-info {
+    opacity: 1;
+    transform: translateY(-100%);
+}
+
+.music-info h4 {
+    margin: 0;
+}
+
+.progress-container {
+    background: white; /* fallback for old browsers */
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 20px 0;
+    height: 4px;
+    width: 100%;
+}
+
+.progress {
+    background-color: var(--gradient-color-right);
+    border-radius: 5px;
+    height: 100%;
+    width: 40%;
+    transition: width 0.1s linear;
 }
