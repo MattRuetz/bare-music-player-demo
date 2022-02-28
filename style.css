@@ -51,7 +51,7 @@ body {
 .img-container::after {
     content: '';
     background-color: #fff;
-    border: 1.5px solid black;
+    border: 1.5px solid rgba(0, 0, 0, 0.5);
     border-radius: 50%;
     position: absolute;
     bottom: 100%;
@@ -62,7 +62,7 @@ body {
 }
 
 .img-container img {
-    border: 1.5px solid black;
+    border: 1.5px solid rgba(0, 0, 0, 0.5);
     border-radius: 50%;
     object-fit: cover;
     height: 110px;

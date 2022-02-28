@@ -28,8 +28,6 @@ const songs = ['hey', 'summer', 'ukulele'];
 // current playing song index
 let songIndex = 2;
 
-let avgBackgroundHex = '';
-
 const loadSong = (song) => {
     title.textContent = song;
     audio.src = `music/${song}.mp3`;
@@ -52,6 +50,38 @@ const pauseSong = () => {
         .classList.replace('fa-pause', 'fa-play');
 
     audio.pause();
+};
+
+const prevSong = () => {
+    songIndex--;
+    // loop back to end of song queue
+    songIndex < 0 && (songIndex = songs.length - 1);
+    loadSong(songs[songIndex]);
+    playSong();
+};
+
+const nextSong = () => {
+    songIndex++;
+    // loop back to end of song queue
+    songIndex > songs.length - 1 && (songIndex = 0);
+    loadSong(songs[songIndex]);
+    playSong();
+};
+
+const updateProgress = (e) => {
+    const { duration, currentTime } = e.srcElement;
+
+    const progressPercent = (currentTime / duration) * 100;
+    progress.style.width = `${progressPercent}%`;
+};
+
+const setProgress = (e) => {
+    const width = e.target.clientWidth;
+    const clickX = e.offsetX;
+    const duration = audio.duration;
+
+    audio.currentTime = (clickX / width) * duration;
+    progress.style.width = `${(clickX / width) * 100}%`;
 };
 
 const setRandomGradient = () => {
@@ -118,6 +148,19 @@ playBtn.addEventListener('click', () => {
         playSong();
     }
 });
+
+// Event Listeners
+prevBtn.addEventListener('click', prevSong);
+nextBtn.addEventListener('click', nextSong);
+
+// lengthen progress bar as progress marches on
+audio.addEventListener('timeupdate', updateProgress);
+
+// Song ends --> go to next
+audio.addEventListener('ended', nextSong);
+
+// To change position in song by clicking progress bar
+progressContainer.addEventListener('click', setProgress);
 
 // On load
 loadSong(songs[songIndex]);
