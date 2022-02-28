@@ -36,7 +36,23 @@ const loadSong = (song) => {
     cover.src = `images/${song}.jpg`;
 };
 
-loadSong(songs[songIndex]);
+const playSong = () => {
+    musicContainer.classList.add('play');
+    playBtn
+        .querySelector('i.fa-solid')
+        .classList.replace('fa-play', 'fa-pause');
+
+    audio.play();
+};
+
+const pauseSong = () => {
+    musicContainer.classList.remove('play');
+    playBtn
+        .querySelector('i.fa-solid')
+        .classList.replace('fa-pause', 'fa-play');
+
+    audio.pause();
+};
 
 const setRandomGradient = () => {
     setGradientLeftHex(getRandomHexColor());
@@ -93,6 +109,17 @@ const chooseHeadingColor = () => {
     }
 };
 
+playBtn.addEventListener('click', () => {
+    const isPlaying = musicContainer.classList.contains('play');
+
+    if (isPlaying) {
+        pauseSong();
+    } else {
+        playSong();
+    }
+});
+
 // On load
+loadSong(songs[songIndex]);
 setRandomGradient();
 chooseHeadingColor();
