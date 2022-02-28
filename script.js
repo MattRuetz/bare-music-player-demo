@@ -9,6 +9,7 @@ const progressContainer = document.getElementById('progress-container');
 const title = document.getElementById('title');
 const cover = document.getElementById('cover');
 
+// Setting function pointers to set background to custom css variables in style.css :root decl
 const getGradientLeftHex = () =>
     document.documentElement.style.getPropertyValue('--gradient-color-left');
 const setGradientLeftHex = (newVal) =>
@@ -28,12 +29,14 @@ const songs = ['hey', 'summer', 'ukulele'];
 // current playing song index
 let songIndex = 2;
 
+// Load song given index in library
 const loadSong = (song) => {
     title.textContent = song;
     audio.src = `music/${song}.mp3`;
     cover.src = `images/${song}.jpg`;
 };
 
+// ------------ Functions to handle player events ------------
 const playSong = () => {
     musicContainer.classList.add('play');
     playBtn
@@ -83,6 +86,8 @@ const setProgress = (e) => {
     audio.currentTime = (clickX / width) * duration;
     progress.style.width = `${(clickX / width) * 100}%`;
 };
+
+// ------------ Functions to Set RANDOM gradient background and styling ------------
 
 const setRandomGradient = () => {
     setGradientLeftHex(getRandomHexColor());
@@ -139,9 +144,11 @@ const chooseHeadingColor = () => {
     }
 };
 
+// ------------ Event Listeners ------------
+
+// Play/Pause
 playBtn.addEventListener('click', () => {
     const isPlaying = musicContainer.classList.contains('play');
-
     if (isPlaying) {
         pauseSong();
     } else {
@@ -149,7 +156,7 @@ playBtn.addEventListener('click', () => {
     }
 });
 
-// Event Listeners
+// Navigation between songs
 prevBtn.addEventListener('click', prevSong);
 nextBtn.addEventListener('click', nextSong);
 
@@ -162,7 +169,8 @@ audio.addEventListener('ended', nextSong);
 // To change position in song by clicking progress bar
 progressContainer.addEventListener('click', setProgress);
 
-// On load
+// ------------ On load ------------
+
 loadSong(songs[songIndex]);
 setRandomGradient();
 chooseHeadingColor();
